@@ -1,14 +1,11 @@
-import os
 import telebot
 import json
 import random
+from telebot import types
+import os
 
 # Получаем токен из переменной окружения
-TOKEN = os.environ.get("BOT_TOKEN")
-
-# Проверка на случай, если токен не передан
-if not TOKEN or ":" not in TOKEN:
-    raise ValueError("❌ Переменная BOT_TOKEN не установлена или имеет неверный формат!")
+TOKEN = os.getenv("BOT_TOKEN")
 
 bot = telebot.TeleBot(TOKEN)
 
@@ -21,21 +18,28 @@ def send_coupon(message):
     try:
         with open("coupons.json", "r", encoding="utf-8") as f:
             coupons = json.load(f)
-    except Exception as e:
+    except:
         coupons = []
-        print(f"Ошибка при чтении coupons.json: {e}")
 
     if coupons:
         coupon = random.choice(coupons)
+
+        # Текст купона
         text = (
-            f"🛍 {coupon['title']}\n"
+            f"🛍 {coupon['shop']} — {coupon['title']}\n"
             f"💬 Промокод: `{coupon['code']}`\n"
             f"📅 До: {coupon['end_date']}\n"
-            f"🎁 {coupon['discount']}\n"
-            f"🔗 [Перейти по ссылке]({coupon['link']})"
+            f"🎁 {coupon['discount']}\n\n"
+            f"⚠️ Любой промокод или купон работает только по своей ссылке!"
         )
-        bot.send_message(message.chat.id, text, parse_mode="Markdown", disable_web_page_preview=True)
+
+        # Кнопка перехода
+        markup = types.InlineKeyboardMarkup()
+        btn = types.InlineKeyboardButton("🔗 Перейти на сайт", url=coupon['link'])
+        markup.add(btn)
+
+        bot.send_message(message.chat.id, text, parse_mode="Markdown", reply_markup=markup)
     else:
         bot.send_message(message.chat.id, "К сожалению, сейчас нет доступных купонов 😢")
 
-bot.polling(non_stop=True)
+bot.polling()
