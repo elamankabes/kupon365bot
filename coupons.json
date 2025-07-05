@@ -1,0 +1,20 @@
+[
+  {
+    "id": "1",
+    "title": "Скидка 20% на электронику",
+    "shop": "AliExpress",
+    "code": "SALE20",
+    "end_date": "2025-12-31",
+    "discount": "20%",
+    "link": "https://ad.admitad.com/goto_example1"
+  },
+  {
+    "id": "2",
+    "title": "Кэшбэк 15% на всё",
+    "shop": "OZON",
+    "code": "CASH15",
+    "end_date": "2025-11-15",
+    "discount": "15%",
+    "link": "https://ad.admitad.com/goto_example2"
+  }
+]
