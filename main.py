@@ -1,23 +1,10 @@
 import telebot
 import json
 import random
-import schedule
-import time
-import threading
-from parser import fetch_coupons  # импортируем функцию из parser.py
 
-TOKEN = "PASTE_YOUR_BOT_TOKEN_HERE"
+TOKEN = "7820035162:AAEGsSfAZW1Ql873ABZW69GtiFnrqKIDcH4"
+
 bot = telebot.TeleBot(TOKEN)
-
-# Запускаем автообновление купонов по расписанию
-def run_scheduler():
-    schedule.every(6).hours.do(fetch_coupons)  # обновлять каждые 6 часов
-    while True:
-        schedule.run_pending()
-        time.sleep(1)
-
-# Запуск планировщика в отдельном потоке
-threading.Thread(target=run_scheduler, daemon=True).start()
 
 @bot.message_handler(commands=['start'])
 def start(message):
