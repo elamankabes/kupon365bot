@@ -20,13 +20,12 @@ def send_coupon(message):
 
     if coupons:
         coupon = random.choice(coupons)
-
         text = (
             f"🛍 {coupon['title']}\n"
             f"💬 Промокод: `{coupon['code']}`\n"
             f"📅 До: {coupon['end_date']}\n"
             f"🎁 {coupon['discount']}\n\n"
-            f"⚠️ Промокод работает только по ссылке ниже!"
+            f"⚠️ Промокод работает только по кнопке ниже!"
         )
 
         markup = InlineKeyboardMarkup()
